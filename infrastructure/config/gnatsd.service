@@ -1,0 +1,15 @@
+[Unit]
+Description=Nats Messaging Server
+After=network.target
+StartLimitBurst=5
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=azureuser
+ExecStart=/home/azureuser/go/bin/gnatsd
+StartLimitIntervalSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -11,8 +11,5 @@ apps:
     instances : 1
     autorestart: false
     env       :
-      TWILIO_TEST_SID: ACe85b1b02065e72d7594a70fe27a2fff3
-      TWILIO_TEST_TOKEN: c2f37fbdd56b1021015c3814636aa981
-      SENDGRID_API_KEY: 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
       CHANNEL_DEFAULT_EMAIL: myuba.no.reply@sendgrid.net
       CHANNEL_DEFAULT_NUMBER: +15005550006

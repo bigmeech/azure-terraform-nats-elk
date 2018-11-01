@@ -1,7 +1,8 @@
 locals {
   go_version = "1.11.1"
-  os_arch = "linux-amd64"
+  os_arch    = "linux-amd64"
 }
+
 resource "azurerm_virtual_machine" "gnatsd_01" {
   name                  = "${var.prefix}-gnatsd_cluster-0"
   location              = "${azurerm_resource_group.test_rg.location}"
@@ -37,8 +38,9 @@ resource "azurerm_virtual_machine" "gnatsd_01" {
 
   os_profile_linux_config {
     disable_password_authentication = true
+
     ssh_keys {
-      path = "/home/${var.vm_username}/.ssh/authorized_keys"
+      path     = "/home/${var.vm_username}/.ssh/authorized_keys"
       key_data = "${var.ssh_pub_key}"
     }
   }
@@ -48,14 +50,26 @@ resource "azurerm_virtual_machine" "gnatsd_01" {
   }
 
   provisioner "file" {
-    source = "scripts/bootstrap-gnatsd.sh"
+    source      = "config/gnatsd.service"
+    destination = "/tmp/gnatsd.service"
+
+    connection {
+      type        = "ssh"
+      user        = "${var.vm_username}"
+      private_key = "${file(var.ssh_priv_keypath)}"
+      agent       = true
+    }
+  }
+
+  provisioner "file" {
+    source      = "scripts/bootstrap-gnatsd.sh"
     destination = "/tmp/bootstrap-gnatsd.sh"
 
     connection {
       type        = "ssh"
       user        = "${var.vm_username}"
       private_key = "${file(var.ssh_priv_keypath)}"
-      agent = true
+      agent       = true
     }
   }
 
@@ -64,12 +78,12 @@ resource "azurerm_virtual_machine" "gnatsd_01" {
       type        = "ssh"
       user        = "${var.vm_username}"
       private_key = "${file(var.ssh_priv_keypath)}"
-      agent = true
+      agent       = true
     }
 
     inline = [
       "chmod +x /tmp/bootstrap-gnatsd.sh",
-      "/tmp/bootstrap-gnatsd.sh"
+      "/tmp/bootstrap-gnatsd.sh",
     ]
   }
 }
@@ -86,7 +100,7 @@ resource "azurerm_network_security_group" "gnatsd_sg" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_ranges    = [4242,8222,4222,6222]
+    destination_port_ranges    = [4242, 8222, 4222, 6222]
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -127,4 +141,3 @@ output "nats_server_name" {
 output "nats_server_ip_address" {
   value = "${azurerm_public_ip.gnatsd_public_ip.ip_address}"
 }
-

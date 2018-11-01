@@ -4,3 +4,4 @@ infrastructure/.terraform
 .terraform
 infrastructure/terraform.tfvars
 infrastructure/terraform.*
+infrastructure/.terraform.tfstate.lock.info

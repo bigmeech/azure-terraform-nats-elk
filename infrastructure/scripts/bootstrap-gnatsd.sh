@@ -19,7 +19,11 @@ source ~/.profile
 go get github.com/nats-io/gnatsd
 go get github.com/nats-io/nats-top
 
+# setup gnatsd as a systemctl service
+sudo cp /tmp/gnatsd.service /etc/systemd/system
+cat /tmp/gnatsd.service
+rm -rf /tmp/gnatsd.service
 
-gnatsd -m 8222 & # run as background
-disown
+sudo systemctl enable gnatsd
+sudo systemctl start gnatsd
 

@@ -1,0 +1,19 @@
+config:
+  target: 'http://127.0.0.1:3000'
+  phases:
+    - duration: 300
+      arrivalRate: 20
+scenarios:
+  - flow:
+    - post:
+        url: "/api/notify"
+        json:
+          title: Account Credit Alert
+          content: A total of N20 has been credited to your account
+          targets:
+          - ns: uba.notify.phone
+            target: "+447703378438"
+            channel: phone
+          - ns: uba.notify.email
+            target: larry.eliemenye@gmail.com
+            channel: email
