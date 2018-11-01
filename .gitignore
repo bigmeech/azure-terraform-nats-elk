@@ -1,0 +1,6 @@
+.idea
+node_modules
+infrastructure/.terraform
+.terraform
+infrastructure/terraform.tfvars
+infrastructure/terraform.*

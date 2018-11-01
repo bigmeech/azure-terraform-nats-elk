@@ -1,0 +1,95 @@
+openapi: '3.0.0'
+info:
+  description: API Documentation for UBA Notification/Alert System
+  version: "0.1.7"
+  title: Notification/Alert System
+paths:
+  /v1/api/notify:
+    post:
+      summary: Payload for the notification engine
+      requestBody:
+        description: Payload for different types of channel
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/All'
+              - $ref: '#/components/schemas/Phone'
+              - $ref: '#/components/schemas/Email'
+              - $ref: '#/components/schemas/PushNotification'
+      responses:
+        '204':
+          description: Message delivered to subscribers
+        '400':
+          description: Unsupported operation
+components:
+  schemas:
+    All:
+      type: object
+      properties:
+        ns:
+          type: string
+          default: uba.notify.*
+        title:
+          type: string
+        content:
+          type: string
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              channel:
+                type: string
+              target:
+                type: string
+    Phone:
+      type: object
+      properties:
+        ns:
+          type: string
+          default: uba.notify.phone
+        target:
+          type: string
+        content:
+          type: string
+        source:
+          type: string
+      required:
+        - channel
+        - target
+        - content
+    Email:
+      type: object
+      properties:
+        ns:
+          type: string
+          default: uba.notify.email
+        subject:
+          type: string
+        content:
+          type: string
+        target:
+          type: string
+        source:
+          type: string
+      required:
+        - channel
+        - subject
+        - target
+        - content
+    PushNotification:
+      type: object
+      properties:
+        ns:
+          type: string
+          default: uba.notify.push
+        subject:
+          type: string
+        content:
+          type: string
+        sender:
+          type: string
+        reciever:
+          type: string
