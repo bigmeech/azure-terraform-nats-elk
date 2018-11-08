@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=azureuser
-ExecStart=/home/azureuser/go/bin/gnatsd
+ExecStart=/home/azureuser/go/bin/gnatsd -m 8222
 StartLimitIntervalSec=10
 
 [Install]
