@@ -1,4 +1,7 @@
 module.exports = {
+  logger: {
+    prettyPrint: true
+  },
   messaging: {
     subject: process.env.NATS_SUBJECT
   },
@@ -17,7 +20,8 @@ module.exports = {
       type: "email",
       default_owner: process.env.CHANNEL_DEFAULT_EMAIL,
       sendgrid_api_key: process.env.SENDGRID_API_KEY,
-      subscription_subject: 'uba.notify.email'
+      subscription_subject: 'uba.notify.email',
+      api_url: 'https://api.sendinblue.com/v3/smtp/email'
     }
   ]
 };

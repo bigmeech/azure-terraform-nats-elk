@@ -1,4 +1,5 @@
 const nats = require('../../common/nats');
+const logger = require('../../common/logger');
 module.exports = function (request, reply) {
   const errors = [];
   const requestPayload = request.body;

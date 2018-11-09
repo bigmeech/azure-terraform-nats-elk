@@ -13,7 +13,7 @@ nats.subscribe(phoneConfig.subscription_subject, (msg) => {
     body: msg.content
   };
   twilioClient.messages.create(msgObject)
-      .then(message => console.log('Text msg sent: ', message.sid))
+      .then(message => console.log(message))
       .catch( err => console.error('Error Sending message', err))
       .done();
 });
