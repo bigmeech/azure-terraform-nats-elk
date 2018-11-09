@@ -3,13 +3,7 @@ apps:
     name      : 'publisher'
     instances : 1
     autorestart: false
-    env       :
-      NATS_SUBJECT: uba.msg
-      PUBLISHER_PORT: 3000
   - script    : 'src/subscriber/index.js'
     name      : 'subscriber'
     instances : 1
     autorestart: false
-    env       :
-      CHANNEL_DEFAULT_EMAIL: myuba.no.reply@sendgrid.net
-      CHANNEL_DEFAULT_NUMBER: +15005550006

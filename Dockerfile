@@ -5,7 +5,6 @@ RUN apt-get -y update && \
     apt-get -y install python build-essential
 
 ENV APP_HOME=/usr/src/app
-ENV PUBLISHER_PORT=3000
 
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
@@ -23,5 +22,5 @@ RUN npm install pm2 -g
 RUN apt-get -y remove python build-essential
 RUN apt-get -y autoremove
 
-EXPOSE ${PUBLISHER_PORT}
+EXPOSE 3000
 CMD [ "pm2-runtime","start", "process.yaml", "--json"]
